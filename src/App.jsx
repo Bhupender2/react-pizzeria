@@ -11,7 +11,7 @@ import Error from "./ui/Error";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
-    errorElement:<Error/>,
+    errorElement: <Error />,
 
     children: [
       { path: "/", element: <Home /> },
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
         loader: menuLoader,
-        errorElement:<Error/>,
+        errorElement: <Error />,
       },
       { path: "/cart", element: <Cart /> },
       { path: "/order/new", element: <CreateOrder /> },
