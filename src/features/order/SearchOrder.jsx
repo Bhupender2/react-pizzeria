@@ -10,6 +10,7 @@ const SearchOrder = () => {
     e.preventDefault();
     if (!query) return;
     navigate(`/order/${query}`);
+    setQuery("")
   }
   return (
     <form onSubmit={handleSubmit}>
