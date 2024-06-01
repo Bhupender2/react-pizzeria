@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
@@ -35,6 +35,10 @@ const fakeCart = [
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting"; //to see if the form is submitting or not
+
+  const formErrors=useActionData(); // now we have connected the action function to the route we can get access to the data return from the action to this component using useActionData(getting errors is the most common useCase)
 
   return (
     <div>
@@ -42,7 +46,7 @@ function CreateOrder() {
 
       {/* <Form method="POST" action="order/new"> dont need to specify the action where the submission should be submitted the react-router is smart enough  */}
       <Form method="POST">
-        {" "}
+  
         {/* to make it work nicely with react router we use Form and we can give post , patch , delete request but not get request Form component is primarily designed to handle form submission via the POST method */}
         <div>
           <label>First Name</label>
@@ -53,6 +57,7 @@ function CreateOrder() {
           <div>
             <input type="tel" name="phone" required />
           </div>
+          {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
         <div>
           <label>Address</label>
@@ -73,7 +78,9 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           {/*we can pass data into the action without being a form field and we can only have string so we need to convert it */}
-          <button>Order now</button>
+          <button disabled={isSubmitting}>
+            {isSubmitting ? "placing order......" : "order now"}
+          </button>
         </div>
       </Form>
     </div>
@@ -92,9 +99,14 @@ export async function action({ request }) {
     cart: JSON.parse(data.cart), // converted back to an  array
     priority: data.priority === "on",
   }; // now we have data now in the shape we wanted it to be now we can use it to create new order
+  const errors = {};
+  if (!isValidPhone(order.phone))
+    errors.phone =
+      "please provide valid phone number we might need it to call you";
+
+  if (Object.keys(errors).length > 0) return errors;
 
   const newOrder = await createOrder(order);
-
 
   return redirect(`/order/${newOrder.id}`);
 }
