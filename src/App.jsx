@@ -1,6 +1,8 @@
 import React from "react";
 import Home from "./ui/Home";
-import CreateOrder from "./features/order/CreateOrder";
+import CreateOrder, {
+  action as createOrderAction,
+} from "./features/order/CreateOrder";
 import Menu, { loader as menuLoader } from "./features/menu/Menu";
 import Cart from "./features/cart/Cart";
 
@@ -24,6 +26,7 @@ const router = createBrowserRouter([
       {
         path: "/order/new",
         element: <CreateOrder />,
+        action: createOrderAction,
       },
       {
         path: "/order/:orderId",
@@ -34,6 +37,9 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+// whenever there is a new form submission on this path and this action will be called
+
 // we put the error element on the parent route coz all the error will get bubbles up unless it was handled individually inside the nested route
 
 //error in the nested routes will actually bubbles up to the parent route unless they are handled individually in the nested route using errorElement property.
