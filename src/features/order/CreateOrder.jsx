@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
@@ -94,7 +94,9 @@ export async function action({ request }) {
   }; // now we have data now in the shape we wanted it to be now we can use it to create new order
 
   const newOrder = await createOrder(order);
-  return null;
+
+
+  return redirect(`/order/${newOrder.id}`);
 }
 // step-2 now it need to the connect the action to the route
 
