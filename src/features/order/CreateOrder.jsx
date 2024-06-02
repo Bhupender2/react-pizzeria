@@ -38,7 +38,7 @@ function CreateOrder() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting"; //to see if the form is submitting or not
 
-  const formErrors=useActionData(); // now we have connected the action function to the route we can get access to the data return from the action to this component using useActionData(getting errors is the most common useCase)
+  const formErrors = useActionData(); // now we have connected the action function to the route we can get access to the data return from the action to this component using useActionData(getting errors is the most common useCase)
 
   return (
     <div>
@@ -46,7 +46,6 @@ function CreateOrder() {
 
       {/* <Form method="POST" action="order/new"> dont need to specify the action where the submission should be submitted the react-router is smart enough  */}
       <Form method="POST">
-  
         {/* to make it work nicely with react router we use Form and we can give post , patch , delete request but not get request Form component is primarily designed to handle form submission via the POST method */}
         <div>
           <label>First Name</label>
@@ -104,7 +103,7 @@ export async function action({ request }) {
     errors.phone =
       "please provide valid phone number we might need it to call you";
 
-  if (Object.keys(errors).length > 0) return errors;
+  if (Object.keys(errors).length > 0) return errors;  //Object.keys() will give an array of the name of the properties
 
   const newOrder = await createOrder(order);
 
