@@ -5,7 +5,7 @@ import { createOrder } from "../../services/apiRestaurant";
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
+    str,
   );
 
 const fakeCart = [
@@ -77,7 +77,10 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           {/*we can pass data into the action without being a form field and we can only have string so we need to convert it */}
-          <button disabled={isSubmitting}>
+          <button
+            disabled={isSubmitting}
+            className="inline-block rounded-full bg-yellow-400 px-4 py-3 font-semibold uppercase tracking-wide text-stone-800 transition-colors duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
+          >
             {isSubmitting ? "placing order......" : "order now"}
           </button>
         </div>
@@ -103,7 +106,7 @@ export async function action({ request }) {
     errors.phone =
       "please provide valid phone number we might need it to call you";
 
-  if (Object.keys(errors).length > 0) return errors;  //Object.keys() will give an array of the name of the properties
+  if (Object.keys(errors).length > 0) return errors; //Object.keys() will give an array of the name of the properties
 
   const newOrder = await createOrder(order);
 
