@@ -7,15 +7,16 @@ export default function AppLayout() {
   const navigation = useNavigation(); // making an instance so that we can use loading state provided by useNavigation hook
 
   console.log(navigation);
-  const isLoading = navigation.state === "loading";  // this laoding indicator is universal to whole app so it any page that is still loading it will be loading unless all the pages are render
+  const isLoading = navigation.state === "loading"; // this laoding indicator is universal to whole app so it any page that is still loading it will be loading unless all the pages are render
   return (
-    <div className="layout">
+    <div className="grid h-screen grid-rows-[auto_1fr_auto]">
       {isLoading && <Loader />}
       <Header />
-      <main>
-        <h1>Content..</h1>
-        <Outlet />
-      </main>
+      <div className="overflow-scroll ">
+        <main className="mx-auto max-w-3xl">
+          <Outlet />
+        </main>
+      </div>
 
       <CartOverview />
     </div>
