@@ -5,7 +5,11 @@ export default {
     fontFamily: {
       sans: "Roboto Mono,  monospace",
     }, // we override the sans default config given by tailwindcss configuration by giving our font family (given the link in index.html)
-    extend: {},
+    extend: {
+      height: {
+        screen: "100dvh",
+      },
+    },
   },
   plugins: [],
 };
