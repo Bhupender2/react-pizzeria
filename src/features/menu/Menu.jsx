@@ -4,17 +4,12 @@ import MenuItem from "./MenuItem";
 
 function Menu() {
   const menu = useLoaderData(); // to load the data coming from menu route
-  console.log(menu);
   return (
-    <h1>
-      {
-        <ul>
-          {menu.map((pizza) => (
-            <MenuItem pizza={pizza} key={pizza.id} />
-          ))}
-        </ul>
-      }
-    </h1>
+    <ul className="divide-y divide-stone-200 px-2"> {/*we can create line between child element*/}
+      {menu.map((pizza) => (
+        <MenuItem pizza={pizza} key={pizza.id} />
+      ))}
+    </ul>
   );
 }
 
