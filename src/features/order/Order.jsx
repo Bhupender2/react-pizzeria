@@ -6,7 +6,7 @@ import {
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
-import {  useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 // const order = {
 //   id: "ABCDEF",
 //   customer: "Jonas",
@@ -58,9 +58,9 @@ function Order() {
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
-    <div>
-      <div>
-        <h2>Status</h2>
+    <div className="space-y-8 px-4 py-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Order #{id} status</h2>
 
         <div>
           {priority && <span>Priority</span>}
@@ -86,7 +86,7 @@ function Order() {
   );
 }
 
-export async function loader({params}) {
+export async function loader({ params }) {
   //  we can't use useParams here cuz its not a component so we can't use hook here so we use Params(from react-router-dom) to get the orderId
   const order = await getOrder(params.orderId);
   return order;
