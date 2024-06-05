@@ -79,7 +79,7 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           {/*we can pass data into the action without being a form field and we can only have string so we need to convert it */}
-          <Button disabled={isSubmitting}>
+          <Button disabled={isSubmitting} type="primary">
             {isSubmitting ? "placing order..." : "order now"}
           </Button>
         </div>
