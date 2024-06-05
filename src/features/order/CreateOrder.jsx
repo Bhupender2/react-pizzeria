@@ -57,7 +57,7 @@ function CreateOrder() {
           <div className="grow">
             <input type="tel" name="phone" required className="input w-full" />
 
-            {formErrors?.phone && <p>{formErrors.phone}</p>}
+            {formErrors?.phone && <p className="text-xs mt-2 text-red-700 bg-red-100  rounded-md p-2">{formErrors.phone}</p>}
           </div>
         </div>
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -66,7 +66,7 @@ function CreateOrder() {
             <input className="input w-full" type="text" name="address" required />
           </div>
         </div>
-        <div>
+        <div className="mb-12 flex items-center gap-5 ">
           <input
             className="h-6 w-6 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-2"
             type="checkbox"
@@ -75,7 +75,7 @@ function CreateOrder() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
+          <label htmlFor="priority" className="font-medium">Want to yo give your order priority?</label>
         </div>
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
