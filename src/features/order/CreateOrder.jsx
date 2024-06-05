@@ -42,25 +42,25 @@ function CreateOrder() {
   const formErrors = useActionData(); // now we have connected the action function to the route we can get access to the data return from the action to this component using useActionData(getting errors is the most common useCase)
 
   return (
-    <div>
-      <h2>Ready to order? Let's go!</h2>
+    <div className="px-4 py-6">
+      <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
 
       {/* <Form method="POST" action="order/new"> dont need to specify the action where the submission should be submitted the react-router is smart enough  */}
       <Form method="POST">
         {/* to make it work nicely with react router we use Form and we can give post , patch , delete request but not get request Form component is primarily designed to handle form submission via the POST method */}
-        <div>
-          <label>First Name</label>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40">First Name</label>
           <input type="text" name="customer" required className="input" />
         </div>
-        <div>
-          <label>Phone number</label>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40">Phone number</label>
           <div>
             <input type="tel" name="phone" required className="input" />
           </div>
           {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
-        <div>
-          <label>Address</label>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40">Address</label>
           <div>
             <input className="input" type="text" name="address" required />
           </div>
