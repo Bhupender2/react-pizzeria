@@ -1,11 +1,19 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Button from "../../ui/Button";
+import { updateName } from "./userSlice";
 
 function CreateUser() {
   const [username, setUsername] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!username) return;
+    dispatch(updateName(username));  //update the value to the redux store storing the value to th redux store
+    navigate("/menu");
   }
 
   return (
@@ -18,7 +26,7 @@ function CreateUser() {
         type="text"
         placeholder="Your full name"
         value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={(e) => setUsername(e.target.value)} // first store the value to the local state varibale and as soon as we submit the value we will dispatch an action to store the value to the redux store
         className="input mb-8 w-72"
       />
 
