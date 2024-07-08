@@ -18,10 +18,6 @@ export const {updateName} = userSlice.actions
 
 export default userSlice.reducer;
 
-
-
-
-
 // function getPosition() {
 //   return new Promise(function (resolve, reject) {
 //     navigator.geolocation.getCurrentPosition(resolve, reject);
