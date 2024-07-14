@@ -18,7 +18,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      state.push(action.payload); //pushing the item straight away(newItem===payload)
+      state.cart.push(action.payload); //pushing the item straight away(newItem===payload)
     }, //these are the five reducers
     deleteItem(state, action) {
       //pizzaId===payload
