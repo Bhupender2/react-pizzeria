@@ -49,3 +49,12 @@ export const {
 } = cartSlice.actions; //actions creator are created automatically
 
 export default cartSlice.reducer; // exporting the combine reducer done by createSlice
+
+export const getTotalCartQuantity = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
+
+export const getTotalCartPrice = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
+
+
+// if we use a lot of selector function it can be hassle so you can handle that "library named called reselect"
