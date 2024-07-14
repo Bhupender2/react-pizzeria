@@ -5,8 +5,8 @@ import cartReducer from "./features/cart/cartSlice"
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
-    cart:cartReducer
+    user: userReducer, // combine reducer from userSlice
+    cart:cartReducer   // combine reducer from cartSlice
   },
 });
 
