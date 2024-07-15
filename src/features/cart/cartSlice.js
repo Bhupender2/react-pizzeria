@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cart:[]
+  cart: [],
   // cart: [
   //   {
   //     pizzaId: 12,
@@ -56,6 +56,9 @@ export const getTotalCartQuantity = (state) =>
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
-  export const getCart=((state) => state.cart.cart)
+export const getCart = (state) => state.cart.cart;
+
+export const getCurrentQuantityById = (id) => (state) =>
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0; 
 
 // if we use a lot of selector function it can be hassle so you can handle that "library named called reselect"
