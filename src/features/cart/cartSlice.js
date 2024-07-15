@@ -33,6 +33,7 @@ const cartSlice = createSlice({
       const item = state.cart.find((item) => item.pizzaId === action.payload);
       item.quantity--; // here on the this value has already been updated
       item.totalPrice = item.unitPrice * item.quantity;
+      if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action); //that particular item is deleted
     },
     clearCart(state) {
       state.cart = [];
@@ -55,10 +56,10 @@ export const getTotalCartQuantity = (state) =>
 
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
-   
+
 export const getCart = (state) => state.cart.cart;
 
 export const getCurrentQuantityById = (id) => (state) =>
-  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0; 
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
 
 // if we use a lot of selector function it can be hassle so you can handle that "library named called reselect"
