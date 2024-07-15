@@ -3,6 +3,7 @@ import Button from "../../ui/Button";
 import LinkButton from "../../ui/LinkButton";
 import CartItem from "./CartItem";
 import { clearCart, getCart } from "./cartSlice";
+import EmptyCart from "./EmptyCart";
 
 // const fakeCart = [
 //   {
@@ -35,6 +36,8 @@ function Cart() {
   const dispatch = useDispatch();
 
   const cart = useSelector(getCart); // getting the actual cart state from global state reading the state from store using useSelector hook
+
+  if (!cart.length) return <EmptyCart/>; // cart.length===0 (which ever is true)
 
   return (
     <div>
