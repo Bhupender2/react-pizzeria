@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  // cart:[]
-  cart: [
-    {
-      pizzaId: 12,
-      name: "Mediterranean",
-      quantity: 2,
-      unitPrice: 16,
-      totalPrice: 32,
-    },
-  ],
+  cart:[]
+  // cart: [
+  //   {
+  //     pizzaId: 12,
+  //     name: "Mediterranean",
+  //     quantity: 1,
+  //     unitPrice: 16,
+  //     totalPrice: 32,
+  //   },
+  // ],
 }; // deriving the initial state
 
 const cartSlice = createSlice({
@@ -34,7 +34,7 @@ const cartSlice = createSlice({
       item.quantity--; // here on the this value has already been updated
       item.totalPrice = item.unitPrice * item.quantity;
     },
-    clearItem(state) {
+    clearCart(state) {
       state.cart = [];
     },
   },
@@ -45,7 +45,7 @@ export const {
   deleteItem,
   increaseItemQuantity,
   decreaseItemQuantity,
-  clearItem,
+  clearCart,
 } = cartSlice.actions; //actions creator are created automatically
 
 export default cartSlice.reducer; // exporting the combine reducer done by createSlice
@@ -56,5 +56,6 @@ export const getTotalCartQuantity = (state) =>
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
+  export const getCart=((state) => state.cart.cart)
 
 // if we use a lot of selector function it can be hassle so you can handle that "library named called reselect"
