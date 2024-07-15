@@ -5,10 +5,15 @@ import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
 import DeleteItem from "../cart/DeleteItem";
 
 function MenuItem({ pizza }) {
+
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+
   const dispatch = useDispatch();
+
   const currentQuantity = useSelector(getCurrentQuantityById(id));
-  const isInCart = currentQuantity > 0;
+
+  const isInCart = currentQuantity > 0;  // if the item is in the cart or not 
+
   function handleAddToCart() {
     const newItem = {
       pizzaId: id,
