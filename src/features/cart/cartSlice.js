@@ -33,7 +33,7 @@ const cartSlice = createSlice({
       const item = state.cart.find((item) => item.pizzaId === action.payload);
       item.quantity--; // here on the this value has already been updated
       item.totalPrice = item.unitPrice * item.quantity;
-      if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action); //that particular item is deleted
+      if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action); //that particular item is deleted // we can call reducer inside another reducer using the casereducers method
     },
     clearCart(state) {
       state.cart = [];
