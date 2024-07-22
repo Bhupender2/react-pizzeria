@@ -1,10 +1,13 @@
+import { StrictMode } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
-import { getCart } from "../cart/cartSlice";
+import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
+import store from "../../store";
+import { formatCurrency } from "../../utils/helpers";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -13,16 +16,21 @@ const isValidPhone = (str) =>
   );
 
 function CreateOrder() {
-  // const [withPriority, setWithPriority] = useState(false);
+  const [withPriority, setWithPriority] = useState(false);
   const username = useSelector((state) => state.user.username);
 
   const navigation = useNavigation();
-  
+
   const isSubmitting = navigation.state === "submitting"; //to see if the form is submitting or not
 
   const formErrors = useActionData(); // now we have connected the action function to the route we can get access to the data return from the action to this component using useActionData(getting errors is the most common useCase)
 
   const cart = useSelector(getCart);
+
+  const totalCartPrice = useSelector(getTotalCartPrice);
+  const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+
+  const totalPrice = totalCartPrice + priorityPrice;
 
   if (!cart.length) return <EmptyCart />; //if there is no items in cart we should display the empty cart component
 
@@ -72,8 +80,8 @@ function CreateOrder() {
             type="checkbox"
             name="priority"
             id="priority"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
+            value={withPriority}
+            onChange={(e) => setWithPriority(e.target.checked)} //for checking if it true of false
           />
           <label htmlFor="priority" className="font-medium">
             Want to yo give your order priority?
@@ -83,7 +91,9 @@ function CreateOrder() {
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           {/*we can pass data into the action without being a form field and we can only have string so we need to convert it */}
           <Button disabled={isSubmitting} type="primary">
-            {isSubmitting ? "placing order..." : "order now"}
+            {isSubmitting
+              ? "placing order..."
+              : `order now ${formatCurrency(totalPrice)}`}
           </Button>
         </div>
       </Form>
@@ -101,7 +111,7 @@ export async function action({ request }) {
   const order = {
     ...data,
     cart: JSON.parse(data.cart), // converted back to an  array
-    priority: data.priority === "on",
+    priority: data.priority === "true", // will give the order a priority if the value is true 
   }; // now we have data now in the shape we wanted it to be now we can use it to create new order
   const errors = {};
   if (!isValidPhone(order.phone))
@@ -111,6 +121,9 @@ export async function action({ request }) {
   if (Object.keys(errors).length > 0) return errors; //Object.keys() will give an array of the name of the properties
 
   const newOrder = await createOrder(order);
+
+  //DO NOT OVERUSE THIS BECAUSE IT CAN STOP SOME PERFROMANCE OPTIMIZATION TECHNIQUES
+  store.dispatch(clearCart());
 
   return redirect(`/order/${newOrder.id}`);
 }
