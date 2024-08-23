@@ -56,10 +56,11 @@ const userSlice = createSlice({
       state.username = action.payload; // we can directly mutate the state in redux toolkit.
     },
   },
-  extraReducers: (builder) =>
-    builder.addCase(fetchAddress.pending, (state, action) => {
-      state.status = "loading";
-    }).addCase(fetchAddress, )
+  // extraReducers: (builder) =>
+  //   builder.addCase(fetchAddress.pending, (state, action) => {
+  //     state.status = "loading";
+      
+  //   }).addCase(fetchAddress, )
 });
 
 export const { updateName } = userSlice.actions;
