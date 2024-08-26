@@ -34,8 +34,8 @@ export const fetchAddress = createAsyncThunk(
     const addressObj = await getAddress(position);
     const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
 
-    // 3) Then we return an object with the data that we are interested in 
-    // the data that we return here will become the payload of the fullfilled state
+    // 3) Then we return an object with the data that we are interested in
+    // the data that we return here will become the payload of the fullfilled state( very important)
     return { position, address };
   },
 ); // passing an async function which will return the payload for the reducer later  ( this function will return a promise so an async function is perfect here)
@@ -56,11 +56,20 @@ const userSlice = createSlice({
       state.username = action.payload; // we can directly mutate the state in redux toolkit.
     },
   },
-  // extraReducers: (builder) =>
-  //   builder.addCase(fetchAddress.pending, (state, action) => {
-  //     state.status = "loading";
-      
-  //   }).addCase(fetchAddress, )
+  extraReducers: (builder) =>
+    builder
+      .addCase(fetchAddress.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAddress.fulfilled, (state, action) => {
+        state.position = action.payload.position; // position is updated while mutating the state right away
+        state.address = action.payload.address; // the adress is updated while mutating the state right away
+        state.status = "idle";
+      })
+      .addCase(fetchAddress.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message; 
+      }),
 });
 
 export const { updateName } = userSlice.actions;
