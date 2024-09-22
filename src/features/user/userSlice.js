@@ -11,6 +11,8 @@ const initialState = {
   error: "",
 };
 
+// createasyncthunk
+
 function getPosition() {
   // wrapping a promise in a function so that we can use async await coz it returns a promise when we use async await
   return new Promise(function (resolve, reject) {
