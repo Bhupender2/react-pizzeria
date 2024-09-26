@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
@@ -8,6 +8,7 @@ import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import store from "../../store";
 import { formatCurrency } from "../../utils/helpers";
+import { fetchAddress } from "../user/userSlice";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -31,12 +32,14 @@ function CreateOrder() {
   const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
 
   const totalPrice = totalCartPrice + priorityPrice;
+  const dispatch = useDispatch();
 
   if (!cart.length) return <EmptyCart />; //if there is no items in cart we should display the empty cart component
 
   return (
     <div className="px-4 py-6">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
+      <button onClick={() => dispatch(fetchAddress())}>get postion</button> 
 
       {/* <Form method="POST" action="order/new"> dont need to specify the action where the submission should be submitted the react-router is smart enough  */}
       <Form method="POST">
@@ -111,7 +114,7 @@ export async function action({ request }) {
   const order = {
     ...data,
     cart: JSON.parse(data.cart), // converted back to an  array
-    priority: data.priority === "true", // will give the order a priority if the value is true 
+    priority: data.priority === "true", // will give the order a priority if the value is true
   }; // now we have data now in the shape we wanted it to be now we can use it to create new order
   const errors = {};
   if (!isValidPhone(order.phone))
