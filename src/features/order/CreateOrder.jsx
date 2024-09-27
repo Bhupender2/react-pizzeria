@@ -112,7 +112,7 @@ export async function action({ request }) {
     ...data,
     cart: JSON.parse(data.cart), // converted back to an  array
     priority: data.priority === "true", // will give the order a priority if the value is true 
-  }; // now we have data now in the shape we wanted it to be now we can use it to create new order
+  }; // now we have data now in the shape we wanted it to be now we can use it to create new order 
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
