@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
@@ -8,6 +8,7 @@ import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import store from "../../store";
 import { formatCurrency } from "../../utils/helpers";
+import { fetchAddress } from "../user/userSlice";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -31,6 +32,7 @@ function CreateOrder() {
   const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
 
   const totalPrice = totalCartPrice + priorityPrice;
+  const dispatch = useDispatch();
 
   if (!cart.length) return <EmptyCart />; //if there is no items in cart we should display the empty cart component
 
@@ -63,7 +65,7 @@ function CreateOrder() {
             )}
           </div>
         </div>
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">Address</label>
           <div className="grow">
             <input
@@ -73,6 +75,11 @@ function CreateOrder() {
               required
             />
           </div>
+          <span className="absolute right-[3px] z-50">
+            <Button type="small" onClick={() => dispatch(fetchAddress())}>
+              get postion
+            </Button>
+          </span>
         </div>
         <div className="mb-12 flex items-center gap-5">
           <input
@@ -111,8 +118,13 @@ export async function action({ request }) {
   const order = {
     ...data,
     cart: JSON.parse(data.cart), // converted back to an  array
+<<<<<<< HEAD
     priority: data.priority === "true", // will give the order a priority if the value is true 
   }; // now we have data now in the shape we wanted it to be now we can use it to create new order 
+=======
+    priority: data.priority === "true", // will give the order a priority if the value is true
+  }; // now we have data now in the shape we wanted it to be now we can use it to create new order
+>>>>>>> 0f29761dcd1f70dbb97551f3a741f81c479f96c1
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
