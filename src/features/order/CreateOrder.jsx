@@ -75,8 +75,11 @@ function CreateOrder() {
               required
             />
           </div>
-          <span className="absolute right-[3px] z-50">
-            <Button type="small" onClick={() => dispatch(fetchAddress())}>
+          <span className="absolute right-[3px] bottom-[3px] md:right-[5px] md:top-[5px] z-50">
+            <Button type="small" onClick={(e) => {
+              e.preventDefault();
+              dispatch(fetchAddress())
+            }}>
               get postion
             </Button>
           </span>
@@ -118,13 +121,9 @@ export async function action({ request }) {
   const order = {
     ...data,
     cart: JSON.parse(data.cart), // converted back to an  array
-<<<<<<< HEAD
-    priority: data.priority === "true", // will give the order a priority if the value is true 
-  }; // now we have data now in the shape we wanted it to be now we can use it to create new order 
-=======
     priority: data.priority === "true", // will give the order a priority if the value is true
   }; // now we have data now in the shape we wanted it to be now we can use it to create new order
->>>>>>> 0f29761dcd1f70dbb97551f3a741f81c479f96c1
+    
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
