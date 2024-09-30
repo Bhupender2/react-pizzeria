@@ -119,6 +119,15 @@ function CreateOrder() {
         </div>
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <input
+            type="hidden"
+            name="position"
+            value={
+              position.longitude && position.latitude
+                ? `${position.longitude}, ${position.latitude}`
+                : ""
+            }
+          />
           {/*we can pass data into the action without being a form field and we can only have string so we need to convert it */}
           <Button disabled={isSubmitting} type="primary">
             {isSubmitting
@@ -144,6 +153,7 @@ export async function action({ request }) {
     priority: data.priority === "true", // will give the order a priority if the value is true
   }; // now we have data now in the shape we wanted it to be now we can use it to create new order
 
+  console.log(order);
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
