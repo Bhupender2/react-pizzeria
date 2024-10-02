@@ -6,8 +6,9 @@ import {
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
-import { useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import OrderItem from "./OrderItem";
+import { useEffect } from "react";
 // const order = {
 //   id: "ABCDEF",
 //   customer: "Jonas",
@@ -47,6 +48,12 @@ function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
 
   const order = useLoaderData(); // the data we fetch using react router loader we can get that data into the component using useLoaderData component
+  const fetcher = useFetcher();
+
+  useEffect(() => {
+    if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu");
+  }, []);
+  console.log(fetcher.data);
   const {
     id,
     status,
@@ -86,7 +93,15 @@ function Order() {
 
       <ul className="dive-stone-200 divide-y border-b border-t">
         {cart.map((item) => (
-          <OrderItem item={item} key={item.pizzaId} />
+          <OrderItem
+            item={item}
+            key={item.pizzaId}
+            ingredients={
+              fetcher?.data?.find((el) => el.id === item.pizzaId)
+                ?.ingredients ?? [] // at first the fetcher is idle so it will be undefined so we use ?? to return an empty array instead
+            }
+            isLoadingIngredients={fetcher.state === "loading"}
+          />
         ))}
       </ul>
 
