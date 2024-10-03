@@ -27,7 +27,7 @@ function MenuItem({ pizza }) {
   }
 
   return (
-    <li className="transform cursor-pointer flex-col gap-4 rounded-xl bg-white py-2 shadow-xl transition-transform duration-300 hover:scale-[1.02] mt-10">
+    <li className="mt-10 transform cursor-pointer flex-col gap-4 rounded-xl bg-white py-2 shadow-xl transition-transform duration-300 hover:scale-[1.02]">
       <img
         src={imageUrl}
         alt={name}
