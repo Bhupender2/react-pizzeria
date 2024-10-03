@@ -44,7 +44,7 @@ function CreateOrder() {
   if (!cart.length) return <EmptyCart />; //if there is no items in cart we should display the empty cart component
 
   return (
-    <div className="px-4 py-6">
+    <div className="px-4 py-6  ">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
 
       {/* <Form method="POST" action="order/new"> dont need to specify the action where the submission should be submitted the react-router is smart enough  */}
