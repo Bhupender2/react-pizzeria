@@ -9,7 +9,6 @@ function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
   const dispatch = useDispatch();
-
   const currentQuantity = useSelector(getCurrentQuantityById(id));
 
   const isInCart = currentQuantity > 0; // if the item is in the cart or not
@@ -27,20 +26,20 @@ function MenuItem({ pizza }) {
   }
 
   return (
-    <li className="flex gap-4 py-2">
+    <li className="overflow-hidden rounded-xl bg-white shadow-xl transition-transform duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer">
       <img
         src={imageUrl}
         alt={name}
-        className={`h-24 ${soldOut ? "opacity-70 grayscale" : ""}`}
+        className={`h-60 w-full object-cover ${soldOut ? "opacity-70 grayscale" : ""}`}
       />
-      <div className="flex grow flex-col pt-0.5">
-        <p className="font-medium">{name}</p>
-        <p className="text-sm capitalize italic text-stone-500">
+      <div className="p-4 space-y-2">
+        <p className="font-semibold text-xl">{name}</p>
+        <p className="text-sm italic text-stone-500">
           {ingredients.join(", ")}
         </p>
-        <div className="mt-auto flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between">
           {!soldOut ? (
-            <p className="text-sm">{formatCurrency(unitPrice)}</p>
+            <p className="font-bold text-lg">{formatCurrency(unitPrice)}</p>
           ) : (
             <p className="text-sm font-medium uppercase text-stone-500">
               Sold out
